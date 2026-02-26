@@ -13,9 +13,9 @@
       }
     },
     {
-      "files": "*.scss",
+      "files": "*.css",
       "options": {
-        "parser": "scss",
+        "parser": "css",
         "semi": true
       }
     }
