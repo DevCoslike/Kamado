@@ -1,9 +1,23 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "semi": true,
-  "printWidth": 80,
+  "printWidth": 120,
   "tabWidth": 2,
-  "arrowParens": "always",
-  "endOfLine": "auto"
+  "semi": false,
+  "singleQuote": true,
+  "overrides": [
+    {
+      "files": "*.ts*",
+      "options": {
+        "parser": "typescript",
+        "bracketSpacing": false,
+        "arrowParens": "avoid"
+      }
+    },
+    {
+      "files": "*.scss",
+      "options": {
+        "parser": "scss",
+        "semi": true
+      }
+    }
+  ]
 }
