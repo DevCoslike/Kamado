@@ -37,8 +37,8 @@ These are non-negotiable per the case study and org standards.
 ### Add for the SPA and features
 
 - **Routing:** **React Router** (e.g. `react-router-dom` v6) — for `/`, `/request-certificate`, `/requests` and the shell layout with an outlet as in the [app-routes-draft](.cursor/pdf/app-routes-draft.md).
-- **Styling:** **Tailwind CSS** — required for shadcn/ui; use for layout, breakpoints (mobile-first), and utilities.
-- **Component library:** **shadcn/ui** — copy-paste components (Radix + Tailwind); you own the code. Run `npx shadcn@latest init` then add the components listed in **Notes** below.
+- **Styling:** **PrimeReact theme** — use the **bootstrap-blue-light** style (built-in theme: `bootstrap4-light-blue`). Import `primereact/resources/themes/bootstrap4-light-blue/theme.css` and `primereact/resources/primereact.min.css`; add `primeicons/primeicons.css` for icons. Use **Tailwind CSS** or **PrimeFlex** for layout, breakpoints (mobile-first), and utilities.
+- **Component library:** **PrimeReact** — use theme **bootstrap4-light-blue** (bootstrap blue light style). Wrap the app with `PrimeReactProvider` from `primereact/api`. Use the components listed in **Notes** below.
 - **Forms & validation:** **React Hook Form** + **Zod** (or **Yup**) — in-line validation (F02-R02), typed schema for "Address to", "Purpose" (min 50 chars), "Issued on" (future only), "Employee ID" (numeric).
 - **HTTP client:** **fetch** (native) — sufficient for POST `/request-certificate` and GET `/request-list` with the API key; no need for axios unless you prefer it.
 - **PDF in dialog (F05-R02):** Use the **browser's built-in PDF viewer** (e.g. `<object>` or `<iframe>` with a `blob:` or mock URL). Case study says "browser PDF viewer is sufficient" and leaves storage/display to you — e.g. mock URL, base64, or static sample PDF for "Done" status; no backend PDF API.
@@ -48,7 +48,7 @@ These are non-negotiable per the case study and org standards.
 **Yes — the current stack supports mobile-first; no need to change it.**
 
 - **React / Vite / Redux / React Router / React Hook Form** — Framework and tooling are layout-agnostic. Mobile-first is implemented via CSS and layout structure.
-- **shadcn/ui + Tailwind:** Use Tailwind breakpoints (e.g. `flex-col md:flex-row`, `w-full md:w-auto`) and responsive utilities. Stack form fields vertically; use full-width inputs. For the requests list, use a responsive Table (horizontal scroll on small screens) or a card/list layout for very small viewports. Full-screen Dialog (F05) already suits mobile; keep touch-friendly close/actions. Use a responsive shell (e.g. Sheet for mobile nav, horizontal nav on larger).
+- **PrimeReact + Tailwind/PrimeFlex:** Use Tailwind or PrimeFlex breakpoints (e.g. `flex flex-column md:flex-row`, `w-full`) and responsive utilities. Stack form fields vertically; use full-width inputs. For the requests list, use PrimeReact DataTable (horizontal scroll on small screens) or a card/list layout for very small viewports. Full-screen Dialog (F05) already suits mobile; keep touch-friendly close/actions. Use a responsive shell (e.g. Sidebar or Menu for mobile nav, horizontal nav on larger).
 - **Implementation:** Design for small viewports first, then `md:` / `lg:` for tablet/desktop. Use viewport meta tag and touch-friendly tap targets.
 
 ## Summary diagram
@@ -68,7 +68,7 @@ flowchart LR
   subgraph ToAdd["To add"]
     Router[React Router]
     Tailwind[Tailwind CSS]
-    Shadcn[shadcn/ui]
+    PrimeReact[PrimeReact]
     RHF[React Hook Form]
     Zod[Zod]
   end
@@ -102,23 +102,31 @@ flowchart LR
 | Forms & validation    | React Hook Form + Zod             | Add for F02                                      |
 | HTTP                  | fetch                             | No extra dependency                              |
 | PDF                   | Browser (`<object>` / `<iframe>`) | Mock or base64 for "Done"                         |
-| Styling               | Tailwind CSS                      | Required for shadcn/ui; mobile-first breakpoints |
-| **Component library** | **shadcn/ui**                     | Copy-paste; add components per Notes below       |
+| Styling               | PrimeReact theme + Tailwind/PrimeFlex | Theme: **bootstrap4-light-blue** (bootstrap blue light); layout/breakpoints via Tailwind or PrimeFlex |
+| **Component library** | **PrimeReact**                    | Theme: bootstrap-blue-light style; see Notes below |
 
 This keeps the stack minimal, matches the case study and visual plan, and fits the existing Kamado repo.
 
 ---
 
-## Notes – shadcn/ui components to add
+## Notes – PrimeReact components and setup
 
-Install after `npx shadcn@latest init`. Add each with `npx shadcn@latest add <component>`.
+**Theme:** Use **bootstrap-blue-light** style via the built-in theme `bootstrap4-light-blue`. In your app entry (e.g. `main.tsx`):
 
-| Feature / area                     | shadcn/ui components                                          | Use                                                                                                                                                                                                                                                                                                                                                                        |
-| ---------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **App shell / layout**             | `Button`, `Sheet` (optional)                                  | Nav links (Home, Request Certificate, Requests List). `Sheet` for mobile drawer if desired.                                                                                                                                                                                                                                                                                |
-| **F02 – Request Certificate form** | `Button`, `Input`, `Textarea`, `Label`, `Calendar`, `Popover` | **Address to:** Input or Textarea (alphanumeric). **Purpose:** Textarea (min 50 chars, with styling). **Issued on:** Calendar inside Popover (future dates only). **Employee ID:** Input (numeric). Submit **Button**. Use **Label** for field labels.                                                                                                                     |
-| **F04 – Requests list**            | `Table`, `Input`, `Select`, `Button`                          | **Table** (TableHeader, TableBody, TableRow, TableHead, TableCell) for columns: Reference No., Address to, Purpose, Issued on, Status, and action column. **Input** for filter fields (Reference No. full match, Address to contains). **Select** for Status filter. **Button** (icon) in last column to open view dialog. Implement sort on Issued on and Status in code. |
-| **F05 – View request dialog**      | `Dialog`, `Button`                                            | Full-screen **Dialog**: left side — Reference No., Address to, Purpose, Issued on (if Done), Status; right side — PDF viewer (`<object>`/`<iframe>`) or "Certificate is yet to be issued." **Button** to close.                                                                                                                                                            |
-| **F06 – Update purpose**           | `Textarea`, `Button`                                          | Inside same Dialog: **Textarea** for purpose (editable only when status = "New"). **Button** "Confirm" to apply; update Redux/local state so list behind updates without refresh.                                                                                                                                                                                          |
+```ts
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import 'primereact/resources/primereact.min.css';
+import 'primeicons/primeicons.css';
+```
 
-**Summary – components to add:** `Button`, `Input`, `Textarea`, `Label`, `Calendar`, `Popover`, `Table`, `Select`, `Dialog`, and optionally `Sheet` for mobile nav. Add dependencies as prompted (e.g. `date-fns` for Calendar).
+Wrap the app with `PrimeReactProvider` from `primereact/api`.
+
+| Feature / area                     | PrimeReact components                                      | Use                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **App shell / layout**             | `Button`, `Sidebar` or `Menu` (optional)                   | Nav links (Home, Request Certificate, Requests List). `Sidebar` or `Menu` for mobile drawer if desired.                                                                                                                                                                                                                                                                   |
+| **F02 – Request Certificate form** | `Button`, `InputText`, `InputTextarea`, `Calendar`, `FloatLabel` | **Address to:** InputText or InputTextarea (alphanumeric). **Purpose:** InputTextarea (min 50 chars). **Issued on:** Calendar with `minDate` / date restriction for future only. **Employee ID:** InputText (numeric). Submit **Button**. Use **FloatLabel** or labels for field labels.                                                                                   |
+| **F04 – Requests list**            | `DataTable`, `InputText`, `Dropdown`, `Button`             | **DataTable** for columns: Reference No., Address to, Purpose, Issued on, Status, and action column. **InputText** for filter fields (Reference No. full match, Address to contains). **Dropdown** for Status filter. **Button** (icon) in last column to open view dialog. Implement sort on Issued on and Status via DataTable or in code.                               |
+| **F05 – View request dialog**      | `Dialog`, `Button`                                        | Full-screen **Dialog**: left side — Reference No., Address to, Purpose, Issued on (if Done), Status; right side — PDF viewer (`<object>`/`<iframe>`) or "Certificate is yet to be issued." **Button** to close.                                                                                                                                                            |
+| **F06 – Update purpose**           | `InputTextarea`, `Button`                                 | Inside same Dialog: **InputTextarea** for purpose (editable only when status = "New"). **Button** "Confirm" to apply; update Redux/local state so list behind updates without refresh.                                                                                                                                                                                    |
+
+**Summary – components:** `Button`, `InputText`, `InputTextarea`, `FloatLabel`, `Calendar`, `DataTable`, `Dropdown`, `Dialog`, and optionally `Sidebar` or `Menu` for mobile nav. Use `date-fns` with Calendar as needed.
