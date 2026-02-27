@@ -72,7 +72,9 @@ export function RequestCertificateForm() {
             className={`w-full ${errors.address_to ? 'p-invalid' : ''}`}
             aria-invalid={!!errors.address_to}
           />
-          {errors.address_to && <small className="p-error">{errors.address_to.message}</small>}
+          <span className="form-error-slot">
+            {errors.address_to && <small className="p-error">{errors.address_to.message}</small>}
+          </span>
         </div>
 
         <div className="col-12 md:col-3 flex flex-column gap-1">
@@ -95,7 +97,9 @@ export function RequestCertificateForm() {
               />
             )}
           />
-          {errors.issued_on && <small className="p-error">{errors.issued_on.message}</small>}
+          <span className="form-error-slot">
+            {errors.issued_on && <small className="p-error">{errors.issued_on.message}</small>}
+          </span>
         </div>
 
         <div className="col-12 md:col-3 flex flex-column gap-1">
@@ -106,7 +110,9 @@ export function RequestCertificateForm() {
             className={`w-full ${errors.employee_id ? 'p-invalid' : ''}`}
             aria-invalid={!!errors.employee_id}
           />
-          {errors.employee_id && <small className="p-error">{errors.employee_id.message}</small>}
+          <span className="form-error-slot">
+            {errors.employee_id && <small className="p-error">{errors.employee_id.message}</small>}
+          </span>
         </div>
       </div>
 
@@ -119,7 +125,9 @@ export function RequestCertificateForm() {
           className={`w-full ${errors.purpose ? 'p-invalid' : ''}`}
           aria-invalid={!!errors.purpose}
         />
-        {errors.purpose && <small className="p-error">{errors.purpose.message}</small>}
+        <span className="form-error-slot">
+          {errors.purpose && <small className="p-error">{errors.purpose.message}</small>}
+        </span>
       </div>
 
       <Button type="submit" label="Submit" loading={isSubmitting} disabled={!allFilled} />

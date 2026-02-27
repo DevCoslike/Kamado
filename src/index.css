@@ -19,3 +19,9 @@ body {
 header nav a {
   text-decoration: none;
 }
+
+/* Reserve space for form error messages to prevent submit button layout shift */
+.form-error-slot {
+  display: block;
+  min-height: 1.25rem;
+}
