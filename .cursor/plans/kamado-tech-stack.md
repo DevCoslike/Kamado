@@ -37,7 +37,7 @@ These are non-negotiable per the case study and org standards.
 ### Add for the SPA and features
 
 - **Routing:** **React Router** (e.g. `react-router-dom` v6) — for `/`, `/request-certificate`, `/requests` and the shell layout with an outlet as in the [app-routes-draft](.cursor/pdf/app-routes-draft.md).
-- **Styling:** **PrimeReact theme** — use the **bootstrap-blue-light** style (built-in theme: `bootstrap4-light-blue`). Import `primereact/resources/themes/bootstrap4-light-blue/theme.css` and `primereact/resources/primereact.min.css`; add `primeicons/primeicons.css` for icons. Use **Tailwind CSS** or **PrimeFlex** for layout, breakpoints (mobile-first), and utilities.
+- **Styling:** **Bootstrap 5** + **PrimeReact theme** — use **Bootstrap 5** for grid, utilities, and layout (import `bootstrap/dist/css/bootstrap.min.css`). Use the **bootstrap-blue-light** style for PrimeReact (built-in theme: `bootstrap4-light-blue`). Import `primereact/resources/themes/bootstrap4-light-blue/theme.css` and `primereact/resources/primereact.min.css`; add `primeicons/primeicons.css` for icons. Use **PrimeFlex** alongside Bootstrap for extra utilities and mobile-first breakpoints as needed.
 - **Component library:** **PrimeReact** — use theme **bootstrap4-light-blue** (bootstrap blue light style). Wrap the app with `PrimeReactProvider` from `primereact/api`. Use the components listed in **Notes** below.
 - **Forms & validation:** **React Hook Form** + **Zod** (or **Yup**) — in-line validation (F02-R02), typed schema for "Address to", "Purpose" (min 50 chars), "Issued on" (future only), "Employee ID" (numeric).
 - **HTTP client:** **fetch** (native) — sufficient for POST `/request-certificate` and GET `/request-list` with the API key; no need for axios unless you prefer it.
@@ -48,7 +48,7 @@ These are non-negotiable per the case study and org standards.
 **Yes — the current stack supports mobile-first; no need to change it.**
 
 - **React / Vite / Redux / React Router / React Hook Form** — Framework and tooling are layout-agnostic. Mobile-first is implemented via CSS and layout structure.
-- **PrimeReact + Tailwind/PrimeFlex:** Use Tailwind or PrimeFlex breakpoints (e.g. `flex flex-column md:flex-row`, `w-full`) and responsive utilities. Stack form fields vertically; use full-width inputs. For the requests list, use PrimeReact DataTable (horizontal scroll on small screens) or a card/list layout for very small viewports. Full-screen Dialog (F05) already suits mobile; keep touch-friendly close/actions. Use a responsive shell (e.g. Sidebar or Menu for mobile nav, horizontal nav on larger).
+- **Bootstrap 5 + PrimeReact + PrimeFlex:** Use Bootstrap 5 grid and utilities (e.g. `container`, `row`, `col-*`, `d-flex`, `mb-3`) plus PrimeFlex breakpoints (e.g. `flex flex-column md:flex-row`, `w-full`) and responsive utilities. Stack form fields vertically; use full-width inputs. For the requests list, use PrimeReact DataTable (horizontal scroll on small screens) or a card/list layout for very small viewports. Full-screen Dialog (F05) already suits mobile; keep touch-friendly close/actions. Use a responsive shell (e.g. Sidebar or Menu for mobile nav, horizontal nav on larger).
 - **Implementation:** Design for small viewports first, then `md:` / `lg:` for tablet/desktop. Use viewport meta tag and touch-friendly tap targets.
 
 ## Summary diagram
@@ -67,7 +67,7 @@ flowchart LR
   end
   subgraph ToAdd["To add"]
     Router[React Router]
-    Tailwind[Tailwind CSS]
+    Bootstrap[Bootstrap 5]
     PrimeReact[PrimeReact]
     RHF[React Hook Form]
     Zod[Zod]
@@ -102,7 +102,7 @@ flowchart LR
 | Forms & validation    | React Hook Form + Zod             | Add for F02                                      |
 | HTTP                  | fetch                             | No extra dependency                              |
 | PDF                   | Browser (`<object>` / `<iframe>`) | Mock or base64 for "Done"                         |
-| Styling               | PrimeReact theme + Tailwind/PrimeFlex | Theme: **bootstrap4-light-blue** (bootstrap blue light); layout/breakpoints via Tailwind or PrimeFlex |
+| Styling               | Bootstrap 5 + PrimeReact theme + PrimeFlex | **Bootstrap 5** for grid and utilities; PrimeReact theme **bootstrap4-light-blue**; layout/breakpoints via Bootstrap or PrimeFlex |
 | **Component library** | **PrimeReact**                    | Theme: bootstrap-blue-light style; see Notes below |
 
 This keeps the stack minimal, matches the case study and visual plan, and fits the existing Kamado repo.
@@ -111,7 +111,13 @@ This keeps the stack minimal, matches the case study and visual plan, and fits t
 
 ## Notes – PrimeReact components and setup
 
-**Theme:** Use **bootstrap-blue-light** style via the built-in theme `bootstrap4-light-blue`. In your app entry (e.g. `main.tsx`):
+**Bootstrap 5:** Import Bootstrap 5 CSS for grid, utilities, and layout. Load it before PrimeReact in your app entry (e.g. `main.tsx`):
+
+```ts
+import 'bootstrap/dist/css/bootstrap.min.css';
+```
+
+**PrimeReact theme:** Use **bootstrap-blue-light** style via the built-in theme `bootstrap4-light-blue`:
 
 ```ts
 import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';

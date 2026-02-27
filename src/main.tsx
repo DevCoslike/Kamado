@@ -1,5 +1,7 @@
 import './index.css'
 
+import 'bootstrap/dist/css/bootstrap.min.css'
+
 import { PrimeReactProvider } from 'primereact/api'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'

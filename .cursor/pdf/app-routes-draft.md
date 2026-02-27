@@ -1,6 +1,6 @@
 # Kamado app – routes (draft)
 
-*For your use only. Export to PDF if needed: right‑click → “Markdown: Export (PDF)” or print from browser.*
+_For your use only. Export to PDF if needed: right‑click → “Markdown: Export (PDF)” or print from browser._
 
 ---
 
@@ -41,8 +41,8 @@
 
 ## Summary
 
-| Route                  | Page            | Content              |
-|------------------------|-----------------|----------------------|
-| `/`                    | Home            | Empty, simple        |
-| `/request-certificate` | Request Certificate | Form + submit    |
-| `/requests`           | Requests List    | Table + sort/filter; row action opens dialog |
+| Route                  | Page                | Content                                      |
+| ---------------------- | ------------------- | -------------------------------------------- |
+| `/`                    | Home                | Empty, simple                                |
+| `/request-certificate` | Request Certificate | Form + submit                                |
+| `/requests`            | Requests List       | Table + sort/filter; row action opens dialog |
