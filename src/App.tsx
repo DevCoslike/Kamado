@@ -2,7 +2,7 @@ import {Toast} from 'primereact/toast'
 import {useRef} from 'react'
 import {NavLink, Outlet, Route, Routes} from 'react-router-dom'
 
-import {ToastProvider} from './contexts/ToastContext'
+import {ToastProvider} from './contexts/toast-context'
 import {HomePage} from './pages/HomePage'
 import {RequestCertificatePage} from './pages/RequestCertificatePage'
 import {RequestsListPage} from './pages/RequestsListPage'

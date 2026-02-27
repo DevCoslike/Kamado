@@ -7,11 +7,11 @@ import {ProgressSpinner} from 'primereact/progressspinner'
 import {useEffect, useMemo, useState} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 
-import {useToast} from '../../contexts/ToastContext'
-import type {AppDispatch, RootState} from '../../store'
-import type {RequestWithId} from '../../store/slices/requestsSlice'
-import {fetchRequestList, setSelectedId} from '../../store/slices/requestsSlice'
-import {ViewRequestDialog} from './ViewRequestDialog'
+import {useToast} from '../../../contexts/toast-context'
+import type {AppDispatch, RootState} from '../../../store'
+import type {RequestWithId} from '../../../store/slices/requestsSlice'
+import {fetchRequestList, setSelectedId} from '../../../store/slices/requestsSlice'
+import {ViewRequestDialog} from '../request-list-datatable/ViewRequestDialog'
 
 function formatDate(val: string | undefined): string {
   if (!val) return '—'

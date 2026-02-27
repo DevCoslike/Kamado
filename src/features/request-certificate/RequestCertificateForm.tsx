@@ -7,7 +7,7 @@ import {Controller, useForm} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
 
 import {ApiError, postRequestCertificate} from '../../api'
-import {useToast} from '../../contexts/ToastContext'
+import {useToast} from '../../contexts/toast-context'
 import {formatDateForApi} from './formatDateForApi'
 import type {RequestCertificateFormValues} from './requestCertificateSchema'
 import {requestCertificateSchema} from './requestCertificateSchema'
@@ -59,7 +59,7 @@ export function RequestCertificateForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-column gap-3" noValidate>
       <div className="grid gap-3">
-        <div className="col-12 flex flex-column gap-1">
+        <div className="col-12 md:col-3flex flex-column gap-1">
           <label htmlFor="address_to">Address to *</label>
           <InputText
             id="address_to"
@@ -70,24 +70,7 @@ export function RequestCertificateForm() {
           {errors.address_to && <small className="p-error">{errors.address_to.message}</small>}
         </div>
 
-        <div className="col-12 flex flex-column gap-1">
-          <div className="flex justify-content-between align-items-center">
-            <label htmlFor="purpose">Purpose * (min 50 characters)</label>
-            <span className="text-color-secondary text-sm">
-              {purposeLength} / {purposeMin}
-            </span>
-          </div>
-          <InputTextarea
-            id="purpose"
-            {...register('purpose')}
-            rows={4}
-            className={`w-full ${errors.purpose ? 'p-invalid' : ''}`}
-            aria-invalid={!!errors.purpose}
-          />
-          {errors.purpose && <small className="p-error">{errors.purpose.message}</small>}
-        </div>
-
-        <div className="col-12 flex flex-column gap-1">
+        <div className="col-12 md:col-3 flex flex-column gap-1">
           <label htmlFor="issued_on">Issued on * (future dates only)</label>
           <Controller
             control={control}
@@ -107,7 +90,7 @@ export function RequestCertificateForm() {
           {errors.issued_on && <small className="p-error">{errors.issued_on.message}</small>}
         </div>
 
-        <div className="col-12 flex flex-column gap-1">
+        <div className="col-12 md:col-3 flex flex-column gap-1">
           <label htmlFor="employee_id">Employee ID *</label>
           <InputText
             id="employee_id"
@@ -117,6 +100,23 @@ export function RequestCertificateForm() {
           />
           {errors.employee_id && <small className="p-error">{errors.employee_id.message}</small>}
         </div>
+      </div>
+
+      <div className="col-12 flex flex-column gap-1">
+        <div className="flex justify-content-between align-items-center">
+          <label htmlFor="purpose">Purpose * (min 50 characters)</label>
+          <span className="text-color-secondary text-sm">
+            {purposeLength} / {purposeMin}
+          </span>
+        </div>
+        <InputTextarea
+          id="purpose"
+          {...register('purpose')}
+          rows={4}
+          className={`w-full ${errors.purpose ? 'p-invalid' : ''}`}
+          aria-invalid={!!errors.purpose}
+        />
+        {errors.purpose && <small className="p-error">{errors.purpose.message}</small>}
       </div>
 
       <Button type="submit" label="Submit" loading={isSubmitting} disabled={!isValid} />

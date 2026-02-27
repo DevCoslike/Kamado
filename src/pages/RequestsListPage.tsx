@@ -1,4 +1,4 @@
-import {RequestListDatatable} from '../features/requests-list/RequestListDatatable'
+import {RequestListDatatable} from '../features/requests-list/view-request-dialog/RequestListDatatable'
 
 export function RequestsListPage() {
   return (
