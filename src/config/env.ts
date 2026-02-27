@@ -6,23 +6,19 @@
 const rawBaseUrl = import.meta.env.VITE_API_BASE_URL
 const rawKey = import.meta.env.VITE_API_SUBSCRIPTION_KEY
 
-export const apiBaseUrl =
-  typeof rawBaseUrl === 'string' && rawBaseUrl.length > 0
-    ? rawBaseUrl.replace(/\/$/, '')
-    : ''
+export const apiBaseUrl = typeof rawBaseUrl === 'string' && rawBaseUrl.length > 0 ? rawBaseUrl.replace(/\/$/, '') : ''
 
-export const apiSubscriptionKey =
-  typeof rawKey === 'string' ? rawKey.trim() : ''
+export const apiSubscriptionKey = typeof rawKey === 'string' ? rawKey.trim() : ''
 
 if (import.meta.env.DEV) {
   if (!apiSubscriptionKey) {
     console.warn(
-      '[Kamado] VITE_API_SUBSCRIPTION_KEY is missing or empty in .env. API calls will fail. Copy .env.example to .env and set your key.'
+      '[Kamado] VITE_API_SUBSCRIPTION_KEY is missing or empty in .env. API calls will fail. Copy .env.example to .env and set your key.',
     )
   }
   if (!apiBaseUrl) {
     console.warn(
-      '[Kamado] VITE_API_BASE_URL is missing or empty in .env. API calls will fail. Set it in .env (e.g. https://zalexinc.azure-api.net).'
+      '[Kamado] VITE_API_BASE_URL is missing or empty in .env. API calls will fail. Set it in .env (e.g. https://zalexinc.azure-api.net).',
     )
   }
 }
