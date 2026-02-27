@@ -75,7 +75,7 @@ export function RequestListDatatable() {
         <div className="grid gap-2 align-items-end">
           <div className="col-12 md:col-3 flex flex-column gap-1">
             <label htmlFor="filter-ref" className="text-sm">
-              Reference No. (full match)
+              Reference No.
             </label>
             <InputText
               id="filter-ref"
@@ -87,7 +87,7 @@ export function RequestListDatatable() {
           </div>
           <div className="col-12 md:col-3 flex flex-column gap-1">
             <label htmlFor="filter-address" className="text-sm">
-              Address to (contains)
+              Address to
             </label>
             <InputText
               id="filter-address"
@@ -99,14 +99,14 @@ export function RequestListDatatable() {
           </div>
           <div className="col-12 md:col-3 flex flex-column gap-1">
             <label htmlFor="filter-status" className="text-sm">
-              Status (full match)
+              Status
             </label>
             <Dropdown
               inputId="filter-status"
               value={filterStatus}
               options={statusOptions}
               onChange={e => setFilterStatus((e.value ?? '') as string)}
-              placeholder="Status (full match)"
+              placeholder="Status"
               showClear
               className="w-full"
             />
@@ -122,7 +122,7 @@ export function RequestListDatatable() {
           sortField="issued_on"
           sortOrder={-1}
           removableSort
-          scrollHeight="65vh"
+          scrollHeight="60vh"
           tableStyle={{minWidth: '50rem'}}
           emptyMessage="No requests found."
         >

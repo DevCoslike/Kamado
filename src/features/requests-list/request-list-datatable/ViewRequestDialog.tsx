@@ -65,7 +65,16 @@ function ViewRequestDialogInner({selected, onHide, onConfirmPurpose}: ViewReques
       blockScroll
       footer={
         <div className="flex gap-2">
-          {isNew && <Button label="Confirm" icon="pi pi-check" onClick={() => onConfirmPurpose(purposeDraft)} />}
+          {isNew && (
+            <Button
+              label="Confirm"
+              icon="pi pi-check"
+              onClick={() => {
+                onConfirmPurpose(purposeDraft)
+                onHide()
+              }}
+            />
+          )}
           <Button label="Close" icon="pi pi-times" onClick={onHide} />
         </div>
       }
