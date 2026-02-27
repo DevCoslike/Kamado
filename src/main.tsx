@@ -1,14 +1,12 @@
 import './index.css'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-
-import { PrimeReactProvider } from 'primereact/api'
+import 'primeflex/primeflex.css'
 import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import 'primereact/resources/themes/bootstrap4-light-blue/theme.css'
 
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import {PrimeReactProvider} from 'primereact/api'
+import {StrictMode} from 'react'
+import {createRoot} from 'react-dom/client'
 
 import App from './App.tsx'
 
