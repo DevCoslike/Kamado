@@ -3,6 +3,7 @@ import {Button} from 'primereact/button'
 import {Calendar} from 'primereact/calendar'
 import {InputText} from 'primereact/inputtext'
 import {InputTextarea} from 'primereact/inputtextarea'
+import {useState} from 'react'
 import {Controller, useForm} from 'react-hook-form'
 import {useNavigate} from 'react-router-dom'
 
@@ -18,10 +19,10 @@ export function RequestCertificateForm() {
 
   const {
     control,
-    formState: {errors, isSubmitting, isValid},
+    formState: {errors, isSubmitting},
+    getValues,
     handleSubmit,
     register,
-    watch,
   } = useForm<RequestCertificateFormValues>({
     resolver: zodResolver(requestCertificateSchema),
     mode: 'onSubmit',
@@ -32,6 +33,12 @@ export function RequestCertificateForm() {
       employee_id: '',
     },
   })
+
+  const [allFilled, setAllFilled] = useState(false)
+  function checkFilled() {
+    const v = getValues()
+    setAllFilled(Boolean(v.address_to?.trim() && v.purpose?.trim() && v.issued_on && v.employee_id?.trim()))
+  }
 
   async function onSubmit(values: RequestCertificateFormValues) {
     try {
@@ -53,17 +60,15 @@ export function RequestCertificateForm() {
 
   const minDate = new Date()
   minDate.setDate(minDate.getDate() + 1)
-  const purposeLength = (watch('purpose') ?? '').length
-  const purposeMin = 50
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-column gap-3" noValidate>
       <div className="grid gap-3">
-        <div className="col-12 md:col-3flex flex-column gap-1">
+        <div className="col-12 md:col-3 flex flex-column gap-1">
           <label htmlFor="address_to">Address to *</label>
           <InputText
             id="address_to"
-            {...register('address_to')}
+            {...register('address_to', {onChange: checkFilled})}
             className={`w-full ${errors.address_to ? 'p-invalid' : ''}`}
             aria-invalid={!!errors.address_to}
           />
@@ -79,7 +84,10 @@ export function RequestCertificateForm() {
               <Calendar
                 id="issued_on"
                 value={field.value ? new Date(field.value) : null}
-                onChange={e => field.onChange(e.value ? (e.value as Date).toISOString() : '')}
+                onChange={e => {
+                  field.onChange(e.value ? (e.value as Date).toISOString() : '')
+                  checkFilled()
+                }}
                 minDate={minDate}
                 dateFormat="dd/mm/yy"
                 className={`w-full ${errors.issued_on ? 'p-invalid' : ''}`}
@@ -94,7 +102,7 @@ export function RequestCertificateForm() {
           <label htmlFor="employee_id">Employee ID *</label>
           <InputText
             id="employee_id"
-            {...register('employee_id')}
+            {...register('employee_id', {onChange: checkFilled})}
             className={`w-full ${errors.employee_id ? 'p-invalid' : ''}`}
             aria-invalid={!!errors.employee_id}
           />
@@ -103,15 +111,10 @@ export function RequestCertificateForm() {
       </div>
 
       <div className="col-12 flex flex-column gap-1">
-        <div className="flex justify-content-between align-items-center">
-          <label htmlFor="purpose">Purpose * (min 50 characters)</label>
-          <span className="text-color-secondary text-sm">
-            {purposeLength} / {purposeMin}
-          </span>
-        </div>
+        <label htmlFor="purpose">Purpose * (min 50 characters)</label>
         <InputTextarea
           id="purpose"
-          {...register('purpose')}
+          {...register('purpose', {onChange: checkFilled})}
           rows={4}
           className={`w-full ${errors.purpose ? 'p-invalid' : ''}`}
           aria-invalid={!!errors.purpose}
@@ -119,7 +122,7 @@ export function RequestCertificateForm() {
         {errors.purpose && <small className="p-error">{errors.purpose.message}</small>}
       </div>
 
-      <Button type="submit" label="Submit" loading={isSubmitting} disabled={!isValid} />
+      <Button type="submit" label="Submit" loading={isSubmitting} disabled={!allFilled} />
     </form>
   )
 }
