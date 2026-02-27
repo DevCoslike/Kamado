@@ -14,7 +14,6 @@
   "dependencies": {
     "@hookform/resolvers": "^5.0.0",
     "@reduxjs/toolkit": "^2.11.2",
-    "date-fns": "^4.1.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.0",
