@@ -43,3 +43,20 @@ cp .env.example .env
 - [Redux Toolkit](https://redux-toolkit.js.org/) + [React-Redux](https://react-redux.js.org/) – state
 - ESLint (flat config) + Prettier – linting and formatting
 
+## Case study checklist
+
+- [x] F01-R01 – React app, runs on localhost:3000
+- [x] F02-R01 – Request form (Address to, Purpose, Issued on, Employee ID)
+- [x] F02-R02 – In-line validation + error messages
+- [x] F02-R03 – POST request-certificate with API key
+- [x] F02-R04 – Success confirmation message
+- [x] F04-R01 – Requests list table (all columns)
+- [x] F04-R02 – Sort by Issued on, Status
+- [x] F04-R03 – Filter by Reference No., Address to, Status
+- [x] F04-R04 – GET request-list on load
+- [x] F05-R01 – Dialog from row icon, all fields (Issued on if Done)
+- [x] F05-R02 – PDF viewer or "Certificate is yet to be issued"
+- [x] F06-R01 – Editable purpose when status New + confirm button
+- [x] F06-R02 – List updates without refresh
+- [ ] (Optional) T-01 – Deploy online
+
