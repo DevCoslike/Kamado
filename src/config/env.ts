@@ -18,7 +18,7 @@ if (import.meta.env.DEV) {
   }
   if (!apiBaseUrl) {
     console.warn(
-      '[Kamado] VITE_API_BASE_URL is missing or empty in .env. API calls will fail. Set it in .env (e.g. https://zalexinc.azure-api.net).',
+      '[Kamado] VITE_API_BASE_URL is missing or empty in .env. API calls will fail. Set it in .env (e.g. https://test-kamado.test-api.net).',
     )
   }
 }
